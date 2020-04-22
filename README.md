@@ -38,3 +38,14 @@ Sass convenience tools.
 `padding($size, $axis: null)`
 
 `margin($size, $axis: null)`
+
+
+### Road-map (todo-list)
+
+1. Split features (@mixins and @functions) into individual files.
+2. Add @error and @warning logs to each feature.
+3. Add tests to each feature.
+4. Add detailed usage and dependency description to each feature.
+5. Create a minified version.
+6. Create dist version (as node package).
+7. Add more features.
