@@ -1,0 +1,113 @@
+//
+// @File
+// Mixins.
+//
+
+@mixin render-map($map) {
+  @each $k, $v in $map {
+    @if $v != "null" {
+      #{$k}: #{$v};
+    }
+  }
+}
+
+@mixin render-map-by-breakpoints-up($map) {
+  @each $k, $v in $map {
+    @if ($k == 0) {
+      @include render-map($v);
+    }
+    @else {
+      @media (min-width: $k) {
+        @include render-map($v);
+      }
+    }
+  }
+}
+
+@mixin position($pos: null, $top: null, $right: null, $bottom: null, $left: null) {
+  $map: (position: $pos, top: $top, right: $right, bottom: $bottom, left: $left);
+  @include render-map($map);
+}
+
+@mixin flex($flex-direction: null, $justify-content: null, $align-items: null, $flex-wrap: null) {
+  display: flex;
+  $map: (
+    flex-direction: $flex-direction,
+    justify-content: $justify-content,
+    align-items: $align-items,
+    flex-wrap: $flex-wrap
+  );
+  @include render-map($map);
+}
+
+@mixin word-break($v: break-word) {
+  word-break: $v;
+  word-wrap: $v;
+}
+
+@mixin u-spacing($size, $last: false) {
+  & > * + * {
+    margin-top: #{map_get($spacers, $size)};
+  }
+
+  @if ($last) {
+    & > *:last-child {
+      margin-bottom: #{map_get($spacers, $size)};
+    }
+  }
+}
+
+@mixin visibility($toggle) {
+  @if ($toggle == "on") {
+    visibility: visible;
+    opacity: 1;
+  }
+  @else if ($toggle == "off") {
+    visibility: hidden;
+    opacity: 0;
+  }
+  @else {
+    @error "'#{$toggle}' <<< Invalid value. It must be either 'on' or 'off'.";
+  }
+}
+
+@mixin font-variant($color: null, $font-family: null, $font-weight: null) {
+  $variant: (
+    color: $color,
+    font-family: $font-family,
+    font-weight: $font-weight
+  );
+  @include render-map($variant);
+}
+
+@mixin padding($size, $axis: null) {
+  @if ($axis == "y") {
+    padding-top: $size;
+    padding-bottom: $size;
+  }
+
+  @else if ($axis == "x") {
+    padding-right: $size;
+    padding-left: $size;
+  }
+
+  @else if ($axis == null) {
+    padding: $size;
+  }
+}
+
+@mixin margin($size, $axis: null) {
+  @if ($axis == "y") {
+    margin-top: $size;
+    margin-bottom: $size;
+  }
+
+  @else if ($axis == "x") {
+    margin-right: $size;
+    margin-left: $size;
+  }
+
+  @else if ($axis == null) {
+    margin: $size;
+  }
+}
